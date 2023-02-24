@@ -14,7 +14,6 @@ window.resizable(False, False)
 
 img = None
 
-
 def deffect(image):
     if image == None:
         return 3
@@ -32,10 +31,10 @@ def deffect(image):
     lines = cv2.HoughLinesP(
         edges,  # Input edge image
         1,  # Distance resolution in pixels
-        3 * np.pi / 180,  # Angle resolution in radians
+        np.pi / 180,  # Angle resolution in radians
         threshold=100,  # Min number of votes for valid line
         minLineLength=100,  # Min allowed length of line
-        maxLineGap=3  # Max allowed gap between line for joining them
+        maxLineGap=5  # Max allowed gap between line for joining them
     )
 
     angles = []
@@ -46,8 +45,10 @@ def deffect(image):
         angles.append(angle)
         cv2.line(image, (x1, y1), (x2, y2), (0, 0, 255), 2)
 
+    print(angles)
     sred = sum(angles) / len(angles)
-    if sred <= 10:
+    print(sred)
+    if sred <= 5:
         return 2
     else:
         return 1
@@ -56,16 +57,18 @@ def deffect(image):
 def button_defect():
     res = deffect(img)
     if res == 1:
-        lbl_def.config(text="Камера наклонена")
+        lbl_def.config(text="Камера наклонена", fg="#FF0000")
     elif res == 2:
-        lbl_def.config(text="Камера стоит ровно")
+        lbl_def.config(text="Камера стоит ровно", fg="#000000")
     else:
-        lbl_def.config(text="Выберите изображение")
+        lbl_def.config(text="Выберите изображение", fg="#000000")
 
 
 def button_askimage():
+    lbl_def.config(text="Выберите изображение", fg="#000000")
+
     filetypes = (("Изображение", "*.jpg *.gif *.png"),)
-    filename = fd.askopenfilename(title="Открыть файл", initialdir="/", filetypes=filetypes)
+    filename = fd.askopenfilename(title="Открыть файл", initialdir="C:/Users/nikit/OneDrive/Рабочий стол/Ракурс/", filetypes=filetypes)
 
     global img
     global label

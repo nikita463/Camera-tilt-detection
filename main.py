@@ -68,7 +68,7 @@ def button_askimage():
     lbl_def.config(text="Выберите изображение", fg="#000000")
 
     filetypes = (("Изображение", "*.jpg *.gif *.png"),)
-    filename = fd.askopenfilename(title="Открыть файл", initialdir="C:/Users/nikit/OneDrive/Рабочий стол/Ракурс/", filetypes=filetypes)
+    filename = fd.askopenfilename(title="Открыть файл", initialdir="/", filetypes=filetypes)
 
     global img
     global label
